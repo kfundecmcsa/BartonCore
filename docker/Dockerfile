@@ -236,7 +236,7 @@ RUN cd /tmp && \
     ninja install && \
     cp -a /tmp/ot-br-posix/third_party/openthread/repo/include/openthread /usr/local/include && \
     rm -rf /tmp/ot-br-posix
-COPY otbr-agent.conf /etc/dbus-1/system.d/
+COPY files/otbr-agent.conf /etc/dbus-1/system.d/
 
 # Simulated RCP for OpenThread
 RUN cd /tmp && \
@@ -269,7 +269,7 @@ RUN cd /tmp && \
     make && \
     make install && \
     rm -rf /tmp/openssl-1.1.1v.tar.gz /tmp/openssl-1.1.1v
-COPY openssl.conf /etc/ld.so.conf.d/
+COPY files/openssl.conf /etc/ld.so.conf.d/
 RUN ldconfig
 
 # Download, build, and install libcurl, but link against OpenSSL 1.1.1v specifically
@@ -329,16 +329,16 @@ RUN groupadd -g 10000 pcap && \
     setcap cap_net_raw,cap_net_admin=eip /usr/bin/tcpdump
 
 # Add bashrc_term_mods. We're looking to inject this before user creation/customization
-COPY bashrc_term_mods /tmp/bashrc_term_mods
+COPY files/bashrc_term_mods /tmp/bashrc_term_mods
 
 # This script will set up the user specific environment. It is purposefully not run yet,
 # in favor of user creation at run time in the entrypoint script on the CLI, or in the extended
 # Dockerfile.devcontainer to bake the user into the image for the devcontainer.
-COPY setupUser.sh /setupUser.sh
+COPY files/setupUser.sh /setupUser.sh
 RUN chmod +x /setupUser.sh
 
 # Setup our entrypoint
-COPY entrypoint.sh /entrypoint.sh
+COPY files/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["bash"]
