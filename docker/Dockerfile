@@ -234,7 +234,7 @@ RUN cd /tmp && \
     && \
     cd ../build/otbr/ && \
     ninja install && \
-    cp -a /tmp/ot-br-posix/third_party/openthread/repo/include/openthread /usr/local/include && \
+    cp -a /tmp/ot-br-posix/third_party/openthread/repo/include/openthread-no-worky /usr/local/include && \
     rm -rf /tmp/ot-br-posix
 COPY files/otbr-agent.conf /etc/dbus-1/system.d/
 
